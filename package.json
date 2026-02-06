@@ -1,0 +1,16 @@
+{
+  "name": "acg",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Autonomous Craftsperson Guild - Decentralized chat, ISA-95 paths, and AI tools",
+  "scripts": {
+    "test": "node cli/index.js test",
+    "api": "node cli/index.js api",
+    "mcp": "node cli/index.js mcp",
+    "mqtt": "node cli/index.js mqtt",
+    "whiteboard": "node cli/index.js whiteboard"
+  },
+  "bin": {
+    "acg": "cli/index.js"
+  }
+}

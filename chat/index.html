@@ -19,6 +19,7 @@
           <span id="user-name">Loading...</span>
         </div>
         <button class="btn btn-ai" id="ai-panel-toggle" title="AI Assistant (runs locally)">AI</button>
+        <button class="btn btn-console" id="console-toggle" title="Console">Console</button>
         <button class="btn" id="settings-btn" title="Settings">Settings</button>
       </div>
     </header>
@@ -119,6 +120,18 @@
       <button class="send-btn" id="ai-send-btn" disabled>Send</button>
     </div>
     <button class="btn" id="ai-send-to-chat" style="display:none">Send last response to chat</button>
+  </aside>
+
+  <!-- Console Panel -->
+  <aside class="console-panel" id="console-panel">
+    <div class="console-header">
+      <span class="console-title">Console</span>
+      <div class="console-actions">
+        <button class="btn" id="console-export" title="Export logs">Export</button>
+        <button class="btn" id="console-clear" title="Clear">Clear</button>
+      </div>
+    </div>
+    <div class="console-output" id="console-output"></div>
   </aside>
 
   <!-- No-JS fallback -->
