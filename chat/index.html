@@ -18,6 +18,8 @@
           <span class="user-dot" id="user-dot"></span>
           <span id="user-name">Loading...</span>
         </div>
+        <button class="btn btn-wb" id="whiteboard-toggle" title="Whiteboard">Board</button>
+        <button class="btn btn-media" id="media-toggle" title="Camera & Screen Share">Media</button>
         <button class="btn btn-ai" id="ai-panel-toggle" title="AI Assistant (runs locally)">AI</button>
         <button class="btn btn-console" id="console-toggle" title="Console">Console</button>
         <button class="btn" id="settings-btn" title="Settings">Settings</button>
@@ -99,6 +101,42 @@
       </div>
     </div>
   </div>
+
+  <!-- Whiteboard Panel -->
+  <aside class="wb-panel" id="whiteboard-panel">
+    <div class="wb-header">
+      <span class="wb-title">Whiteboard</span>
+      <span class="wb-badge">P2P Sync</span>
+      <div class="wb-tools">
+        <button class="btn wb-tool active" data-wb-tool="pen" title="Pen">&#9999;</button>
+        <button class="btn wb-tool" data-wb-tool="eraser" title="Eraser">&#9003;</button>
+        <button class="btn wb-tool" data-wb-tool="line" title="Line">&#9585;</button>
+        <button class="btn wb-tool" data-wb-tool="rect" title="Rectangle">&#9634;</button>
+        <button class="btn wb-tool" data-wb-tool="ellipse" title="Ellipse">&#9711;</button>
+        <button class="btn wb-tool" data-wb-tool="text" title="Text (double-click)">T</button>
+        <input type="color" id="wb-color" value="#e4e6ed" title="Color">
+        <input type="range" id="wb-width" min="1" max="20" value="2" title="Brush size">
+        <button class="btn" id="wb-undo" title="Undo">&#8630;</button>
+        <button class="btn btn-danger" id="wb-clear" title="Clear All">Clear</button>
+      </div>
+      <button class="wb-close" id="whiteboard-close">&times;</button>
+    </div>
+    <div class="wb-canvas-container" id="wb-canvas-container"></div>
+  </aside>
+
+  <!-- Media Panel -->
+  <aside class="media-panel" id="media-panel">
+    <div class="media-header">
+      <span class="media-title">Media</span>
+      <div class="media-actions">
+        <button class="btn btn-primary" id="media-cam-btn">Camera</button>
+        <button class="btn btn-primary" id="media-screen-btn">Screen Share</button>
+        <button class="btn btn-danger" id="media-stop-btn" style="display:none">Stop All</button>
+      </div>
+      <button class="media-close" id="media-close">&times;</button>
+    </div>
+    <div class="media-grid" id="media-grid"></div>
+  </aside>
 
   <!-- AI Assistant Panel -->
   <aside class="ai-panel" id="ai-panel">

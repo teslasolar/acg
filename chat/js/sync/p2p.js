@@ -62,8 +62,10 @@ export async function joinP2PRoom(roomId) {
   const [sendDel, getDel] = _room.makeAction('del');
   const [sendReact, getReact] = _room.makeAction('react');
   const [sendHist, getHist] = _room.makeAction('hist');
+  const [sendDraw, getDraw] = _room.makeAction('draw');
+  const [sendWbClear, getWbClear] = _room.makeAction('wbclear');
 
-  _actions = { sendMsg, sendEdit, sendDel, sendReact, sendHist };
+  _actions = { sendMsg, sendEdit, sendDel, sendReact, sendHist, sendDraw, sendWbClear };
 
   // --- Incoming message handlers ---
 
@@ -122,6 +124,22 @@ export async function joinP2PRoom(roomId) {
     }
   });
 
+  // --- Whiteboard drawing sync ---
+
+  getDraw((op) => {
+    if (op && op.id) bus.emit('whiteboard:draw-remote', op);
+  });
+
+  getWbClear(() => {
+    bus.emit('whiteboard:clear-remote');
+  });
+
+  // --- Media stream sync via WebRTC ---
+
+  _room.onPeerStream((stream, peerId) => {
+    bus.emit('media:remote-stream', { peerId, stream, type: 'stream' });
+  });
+
   // --- Peer lifecycle ---
 
   _room.onPeerJoin(async (peerId) => {
@@ -142,6 +160,7 @@ export async function joinP2PRoom(roomId) {
   _room.onPeerLeave((peerId) => {
     _peers.delete(peerId);
     bus.emit('p2p:peers-changed', _peers.size);
+    bus.emit('media:remote-stream-removed', { peerId });
   });
 
   // --- Outbound: wire local events to P2P broadcast ---
@@ -167,6 +186,28 @@ export async function joinP2PRoom(roomId) {
   _unsubs.push(bus.on('message:reaction', (msg) => {
     if (msg && !_p2pIncoming.has(msg.id) && _actions.sendReact) {
       _actions.sendReact(msg);
+    }
+  }));
+
+  // Whiteboard outbound
+  _unsubs.push(bus.on('whiteboard:draw', (op) => {
+    if (op && _actions.sendDraw) _actions.sendDraw(op);
+  }));
+
+  _unsubs.push(bus.on('whiteboard:clear', () => {
+    if (_actions.sendWbClear) _actions.sendWbClear({});
+  }));
+
+  // Media outbound: add local stream to room for P2P sharing
+  _unsubs.push(bus.on('media:local-stream', ({ stream }) => {
+    if (_room && stream) {
+      _room.addStream(stream);
+    }
+  }));
+
+  _unsubs.push(bus.on('media:stream-stopped', () => {
+    if (_room && _room.removeStream) {
+      try { _room.removeStream(); } catch {}
     }
   }));
 
