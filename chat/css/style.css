@@ -97,6 +97,10 @@ input:focus,textarea:focus{border-color:var(--primary)}
 .status-dot{width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block}
 .status-dot.offline{background:var(--text-muted)}
 
+/* Peer count */
+.peer-count{font-size:11px;color:var(--text-muted);background:var(--surface2);padding:2px 8px;border-radius:10px;display:none}
+.peer-count.visible{display:inline-block}
+
 /* Search */
 .search-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:4px 8px;font-size:12px;width:180px}
 

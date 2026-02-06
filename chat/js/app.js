@@ -9,12 +9,13 @@ import { getState, setState, onStateChange } from './core/state.js';
 import { openDB } from './storage/db.js';
 import { initUser, updateProfile, enableSigning, saveUser } from './chat/user.js';
 import { joinRoom, loadRooms, createRoom } from './chat/room.js';
-import { initRenderer, renderAll } from './ui/render.js';
+import { initRenderer, renderAll, refreshMessages } from './ui/render.js';
 import { initInput } from './ui/input.js';
 import { initNotifications, requestPermission } from './ui/notify.js';
 import { startLocalSync } from './sync/local.js';
 import { startBroadcastSync } from './sync/broadcast.js';
 import { startPolling } from './sync/poll.js';
+import { joinP2PRoom, getPeerCount } from './sync/p2p.js';
 import { exportAll, downloadJSON, uploadJSON, importBackup, deleteAllData } from './storage/export.js';
 
 const DEFAULT_ROOM = 'acg-main';
@@ -31,29 +32,37 @@ async function init() {
     // 3. Load rooms
     await loadRooms();
 
-    // 4. Auto-join default room
+    // 4. Wire P2P sync to room lifecycle (before first join)
+    bus.on('room:joined', (room) => joinP2PRoom(room.id));
+    bus.on('p2p:peers-changed', updatePeerCount);
+    bus.on('p2p:history-received', () => refreshMessages());
+    bus.on('p2p:unavailable', () => {
+      console.warn('[ACG Chat] P2P unavailable, using polling only');
+    });
+
+    // 5. Auto-join default room (triggers P2P join via event above)
     await joinRoom(DEFAULT_ROOM);
 
-    // 5. Initialize UI
+    // 6. Initialize UI
     initRenderer();
     initInput();
     renderAll();
 
-    // 6. Start sync
+    // 7. Start sync (local + P2P already started via room:joined)
     startBroadcastSync();
     startLocalSync();
     startPolling();
 
-    // 7. Notifications
+    // 8. Notifications
     initNotifications();
 
-    // 8. Wire up UI buttons
+    // 9. Wire up UI buttons
     setupSettings();
     setupRoomCreation();
     setupExportImport();
     setupOnlineStatus();
 
-    // 9. Request notification permission
+    // 10. Request notification permission
     requestPermission();
 
   } catch (err) {
@@ -68,6 +77,17 @@ function updateUserBadge(user) {
   const dotEl = document.getElementById('user-dot');
   if (nameEl) nameEl.textContent = user.name;
   if (dotEl) dotEl.style.background = user.color;
+}
+
+function updatePeerCount(count) {
+  const el = document.getElementById('peer-count');
+  if (!el) return;
+  if (count > 0) {
+    el.textContent = count + (count === 1 ? ' peer' : ' peers');
+    el.classList.add('visible');
+  } else {
+    el.classList.remove('visible');
+  }
 }
 
 function setupOnlineStatus() {
