@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACG Chat</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <h1>ACG Chat <span style="font-size:14px">&#9874;</span></h1>
+      <div class="topbar-actions">
+        <span class="status-dot" id="status-dot" title="Online"></span>
+        <div class="user-badge" id="user-badge">
+          <span class="user-dot" id="user-dot"></span>
+          <span id="user-name">Loading...</span>
+        </div>
+        <button class="btn" id="settings-btn" title="Settings">Settings</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Rooms</div>
+        <div id="room-list"></div>
+        <button class="btn" id="create-room-btn" style="margin-top:8px;width:100%">+ New Room</button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Channels</div>
+        <div id="channel-list"></div>
+      </div>
+      <div class="sidebar-section" style="margin-top:auto;padding-bottom:16px">
+        <button class="btn" id="export-btn" style="width:100%;margin-bottom:6px">Export Data</button>
+        <button class="btn" id="import-btn" style="width:100%">Import Backup</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="channel-header" id="channel-header">Select a room to start chatting</div>
+
+      <div class="message-list" id="message-list">
+        <div class="empty-state">Join or create a room to start chatting.</div>
+      </div>
+
+      <!-- Compose -->
+      <div class="compose">
+        <div class="compose-reply" id="reply-indicator">
+          <span id="reply-text"></span>
+          <button id="cancel-reply">Cancel</button>
+        </div>
+        <div class="compose-row">
+          <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+          <label class="ai-label" title="Mark this message as AI-assisted (ACG Transparency)">
+            <input type="checkbox" id="ai-toggle"> AI
+          </label>
+          <button class="send-btn" id="send-btn">Send</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay hidden" id="settings-modal">
+    <div class="modal">
+      <h2>Settings</h2>
+      <label>Display Name</label>
+      <input type="text" id="settings-name" placeholder="Your name">
+      <label>Color</label>
+      <input type="color" id="settings-color" value="#6366f1">
+      <label>
+        <input type="checkbox" id="settings-signing"> Enable message signing
+      </label>
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="settings-delete-data">Delete All Data</button>
+        <button class="btn" id="settings-cancel">Cancel</button>
+        <button class="btn btn-primary" id="settings-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Room Modal -->
+  <div class="modal-overlay hidden" id="create-room-modal">
+    <div class="modal">
+      <h2>Create Room</h2>
+      <label>Room Name</label>
+      <input type="text" id="new-room-name" placeholder="my-room">
+      <label>Description (optional)</label>
+      <input type="text" id="new-room-desc" placeholder="What's this room about?">
+      <div class="modal-actions">
+        <button class="btn" id="create-room-cancel">Cancel</button>
+        <button class="btn btn-primary" id="create-room-confirm">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No-JS fallback -->
+  <noscript>
+    <style>.app{display:none}</style>
+    <div style="padding:40px;text-align:center;color:#e4e6ed;font-family:sans-serif">
+      <h1>ACG Chat</h1>
+      <p>JavaScript is required for the chat application.</p>
+      <p>Enable JavaScript to join the conversation.</p>
+    </div>
+  </noscript>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

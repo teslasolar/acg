@@ -1,0 +1,23 @@
+[
+  {
+    "id": "acg-main",
+    "name": "ACG Main",
+    "description": "The main ACG community chat room",
+    "created": 1706000000000,
+    "channels": {
+      "NEU": "general",
+      "NED": "random",
+      "NWU": "announcements",
+      "NWD": "questions",
+      "SEU": "ideas",
+      "SED": "feedback",
+      "SWU": "off-topic",
+      "SWD": "archive"
+    },
+    "members": [],
+    "settings": {
+      "allowAI": true,
+      "moderation": false
+    }
+  }
+]
