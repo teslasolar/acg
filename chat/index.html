@@ -18,6 +18,7 @@
           <span class="user-dot" id="user-dot"></span>
           <span id="user-name">Loading...</span>
         </div>
+        <button class="btn btn-ai" id="ai-panel-toggle" title="AI Assistant (runs locally)">AI</button>
         <button class="btn" id="settings-btn" title="Settings">Settings</button>
       </div>
     </header>
@@ -97,6 +98,28 @@
       </div>
     </div>
   </div>
+
+  <!-- AI Assistant Panel -->
+  <aside class="ai-panel" id="ai-panel">
+    <div class="ai-panel-header">
+      <span class="ai-panel-title">AI Assistant</span>
+      <span class="ai-panel-badge">On-Device</span>
+      <button class="ai-panel-close" id="ai-panel-close">&times;</button>
+    </div>
+    <div class="ai-status" id="ai-status">
+      <span class="ai-status-info">SmolLM2-360M &mdash; runs entirely in your browser via WebGPU. No data leaves your device.</span>
+    </div>
+    <div class="ai-panel-actions">
+      <button class="btn btn-primary" id="ai-load-btn">Load Model</button>
+      <button class="btn btn-danger" id="ai-unload-btn">Unload</button>
+    </div>
+    <div class="ai-messages" id="ai-messages"></div>
+    <div class="ai-compose">
+      <input type="text" id="ai-input" placeholder="Ask the AI anything..." autocomplete="off" disabled>
+      <button class="send-btn" id="ai-send-btn" disabled>Send</button>
+    </div>
+    <button class="btn" id="ai-send-to-chat" style="display:none">Send last response to chat</button>
+  </aside>
 
   <!-- No-JS fallback -->
   <noscript>

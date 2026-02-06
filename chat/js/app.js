@@ -17,6 +17,7 @@ import { startBroadcastSync } from './sync/broadcast.js';
 import { startPolling } from './sync/poll.js';
 import { joinP2PRoom, getPeerCount } from './sync/p2p.js';
 import { exportAll, downloadJSON, uploadJSON, importBackup, deleteAllData } from './storage/export.js';
+import { initAIPanel } from './ai/panel.js';
 
 const DEFAULT_ROOM = 'acg-main';
 
@@ -62,7 +63,10 @@ async function init() {
     setupExportImport();
     setupOnlineStatus();
 
-    // 10. Request notification permission
+    // 10. Initialize AI assistant panel
+    initAIPanel();
+
+    // 11. Request notification permission
     requestPermission();
 
   } catch (err) {
