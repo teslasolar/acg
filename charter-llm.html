@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚒ ACG Charter — Live</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--b:#0e0e0e;--s:#1a1a1a;--s2:#242424;--br:#333;--a:#d4883a;--ag:#e9a45c;--t:#d8d4cf;--td:#807a72;--tb:#f0ebe4;--f:'EB Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--b);color:var(--t);font-family:var(--f);min-height:100vh;display:flex;flex-direction:column}
+header{text-align:center;padding:1.5rem 1rem 1rem;border-bottom:1px solid var(--br);background:linear-gradient(180deg,#151515,var(--b))}
+header .sg{font-size:2rem;letter-spacing:.3em;color:var(--a)}
+header h1{font-family:var(--fm);font-size:clamp(.9rem,3vw,1.3rem);font-weight:700;color:var(--tb);margin:.3rem 0 .15rem;letter-spacing:.08em;text-transform:uppercase}
+header p{font-size:.95rem;color:var(--td);font-style:italic;max-width:34rem;margin:0 auto}
+#ctrl{display:flex;align-items:center;justify-content:center;gap:.7rem;padding:.7rem 1rem;background:var(--s);border-bottom:1px solid var(--br);flex-wrap:wrap}
+#ctrl label{font-family:var(--fm);font-size:.7rem;color:var(--td);text-transform:uppercase;letter-spacing:.1em}
+#ctrl select{background:var(--s2);color:var(--t);border:1px solid var(--br);border-radius:.3rem;padding:.3rem .5rem;font-family:var(--fm);font-size:.72rem}
+#load-btn{background:var(--a);color:var(--b);border:none;border-radius:.4rem;padding:.55rem 1.3rem;font-family:var(--fm);font-size:.85rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.06em;transition:all .2s;animation:pulse 2s infinite}
+#load-btn:hover{background:var(--ag);transform:scale(1.03)}
+#load-btn:disabled{opacity:.4;cursor:not-allowed;animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,136,58,.4)}50%{box-shadow:0 0 0 8px rgba(212,136,58,0)}}
+#mode-ind{font-family:var(--fm);font-size:.65rem;padding:.2rem .5rem;border-radius:1rem;border:1px solid var(--br)}
+.ml{color:#6ebf6e;border-color:#6ebf6e!important}.mc{color:#6eaabf;border-color:#6eaabf!important}
+#sbar{font-family:var(--fm);font-size:.72rem;text-align:center;padding:.4rem 1rem;background:var(--b);color:var(--td);min-height:2rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+#pbw{width:min(20rem,55%);height:5px;background:var(--s2);border-radius:3px;overflow:hidden;display:none}
+#pb{height:100%;background:var(--a);width:0%;transition:width .3s;border-radius:3px}
+#chat{flex:1;overflow-y:auto;padding:1.2rem 1rem;max-width:52rem;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.m{max-width:80%;line-height:1.6;font-size:1.05rem;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.m.u{align-self:flex-end;background:var(--s2);border:1px solid var(--br);padding:.7rem 1rem;border-radius:1rem 1rem .2rem 1rem;color:var(--tb)}
+.m.a{align-self:flex-start;padding:.7rem 0 .7rem 1rem;border-left:3px solid var(--a)}
+.m.a .lb{font-family:var(--fm);font-size:.65rem;color:var(--a);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.2rem}
+.tt{display:inline-block;font-family:var(--fm);font-size:.6rem;padding:.1rem .4rem;border-radius:.2rem;margin:.2rem .2rem .2rem 0}
+.tt.lo{background:#1e2a1e;color:#6ebf6e}.tt.cl{background:#1e242a;color:#6eaabf}
+.m.si{align-self:center;text-align:center;max-width:32rem;color:var(--td);font-style:italic;font-size:.95rem;padding:.8rem;border:1px dashed var(--br);border-radius:.5rem}
+#ia{border-top:1px solid var(--br);background:var(--s);padding:.8rem 1rem}
+#iw{max-width:52rem;margin:0 auto;display:flex;gap:.5rem}
+#ui{flex:1;background:var(--b);border:1px solid var(--br);border-radius:.5rem;padding:.6rem .9rem;color:var(--tb);font-family:var(--f);font-size:1rem;outline:none;transition:border-color .2s}
+#ui:focus{border-color:var(--a)}#ui::placeholder{color:var(--td)}
+#sb{background:var(--a);color:var(--b);border:none;border-radius:.5rem;padding:.6rem 1.2rem;font-family:var(--fm);font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.06em;transition:all .2s}
+#sb:hover{background:var(--ag)}#sb:disabled{opacity:.4;cursor:not-allowed}
+#chat::-webkit-scrollbar{width:5px}#chat::-webkit-scrollbar-track{background:var(--b)}#chat::-webkit-scrollbar-thumb{background:var(--br);border-radius:3px}
+#ng{display:none;text-align:center;padding:1.5rem 1rem;color:#c0392b;font-family:var(--fm);font-size:.85rem}
+footer{text-align:center;padding:.4rem;font-family:var(--fm);font-size:.58rem;color:var(--td);border-top:1px solid var(--br)}
+</style>
+</head>
+<body>
+<header>
+<div class="sg">⚒ ACG ⚒</div>
+<h1>Talk to the Charter</h1>
+<p>Local LLM + Cloud AI + MCP tools — the manifesto, alive.</p>
+</header>
+<div id="ctrl">
+<label>Model:</label>
+<select id="ms">
+<option value="SmolLM2-360M-Instruct-q4f16_1-MLC">SmolLM2 360M (~130MB)</option>
+<option value="SmolLM2-1.7B-Instruct-q4f16_1-MLC">SmolLM2 1.7B (~1GB)</option>
+<option value="Llama-3.2-1B-Instruct-q4f16_1-MLC">Llama 3.2 1B (~700MB)</option>
+</select>
+<button id="load-btn">⚡ Load Model</button>
+<label>Mode:</label>
+<select id="md">
+<option value="local">Local (WebLLM)</option>
+<option value="cloud">Cloud (Claude+MCP)</option>
+<option value="hybrid">Hybrid (both)</option>
+</select>
+<span id="mode-ind" class="ml">● LOCAL</span>
+</div>
+<div id="sbar"><span id="st">Press ⚡ Load Model to start</span><div id="pbw"><div id="pb"></div></div></div>
+<div id="ng">WebGPU not supported. Switch to <b>Cloud</b> mode or use Chrome/Edge.</div>
+<div id="chat">
+<div class="m si">The <strong>ACG Manifesto</strong> as a living entity. <strong>Local</strong> mode runs a small LLM on your device. <strong>Cloud</strong> mode uses Claude + MCP tools (Calendar, Gmail, Linear, Atlassian, Intercom). <strong>Hybrid</strong> gives you both.</div>
+</div>
+<div id="ia"><div id="iw">
+<input id="ui" type="text" placeholder="Ask the charter…" autocomplete="off"/>
+<button id="sb">Send</button>
+</div></div>
+<footer>ACG Charter Chat · WebLLM + Anthropic Sandboxed API + MCP · Zero backend</footer>
+
+<script type="module">
+import*as W from"https://esm.run/@mlc-ai/web-llm";
+
+const MF=`ACG MANIFESTO — Professional Code of Conduct for Engineers Using AI.
+The rapid advancement of AI/LLM has introduced confusion and alarming false promises, snake oil, and sleazy shilling. Our duty as software professionals is to prevent degradation of quality by insisting on a high watermark professional code of ethics.
+1. EMBRACING INNOVATION: We explore AI innovations. We recognize AI's transformative potential to improve lives, enhance productivity, solve complex problems.
+2. DEMANDING QUALITY: We commit to rigorous verification, testing, and validation of AI-assisted outputs before production. No half-baked content.
+3. ENSURING SAFETY & SECURITY: Proper harnesses for engineering quality, safety, security, legal liability. Same standards as traditional software.
+4. PROTECTING HUMANS: Psychological safety for humans exposed to AI products. Human interests above technological convenience.
+5. RESPECTING USER AGENCY & INFORMED CONSENT: AI use must not be hidden. Users must know when AI influences outcomes. Transparency is not optional.
+6. RIGHT AND DUTY TO REFUSE: Professionals must refuse unsafe, deceptive, unverifiable AI systems. Ethical refusal is a professional obligation.
+Created by Alex Bunardzic with Woody Zuill, Jona Heidsick, Matt Burch, Alex Thurow, Tsvetan Tsvetanov.`;
+
+const SYS=`You are the living voice of the AI Craftspeople Guild (ACG) Manifesto. You embody its six principles: Embracing Innovation, Demanding Quality, Ensuring Safety & Security, Protecting Humans, Respecting User Agency, and the Right and Duty to Refuse.
+
+Full manifesto:
+${MF}
+
+Answer from the charter's perspective. Be principled, practical, concise. Relate questions back to these values. When using tools, explain how the action connects to the charter's principles.`;
+
+const MCPS=[
+{type:"url",url:"https://mcp.atlassian.com/v1/sse",name:"atlassian"},
+{type:"url",url:"https://mcp.intercom.com/sse",name:"intercom"},
+{type:"url",url:"https://mcp.linear.app/sse",name:"linear"},
+{type:"url",url:"https://gcal.mcp.claude.com/mcp",name:"google-calendar"},
+{type:"url",url:"https://gmail.mcp.claude.com/mcp",name:"gmail"}
+];
+
+const $=s=>document.getElementById(s),
+C=$("chat"),I=$("ui"),SB=$("sb"),ST=$("st"),PW=$("pbw"),PB=$("pb"),
+MS=$("ms"),LB=$("load-btn"),MD=$("md"),MI=$("mode-ind");
+
+let E=null,busy=false,H=[{role:"system",content:SYS}];
+
+if(!navigator.gpu){$("ng").style.display="block";MD.value="cloud";}
+
+function uM(){
+  const m=MD.value;
+  MI.textContent=m==="local"?"● LOCAL":m==="cloud"?"● CLOUD":"● HYBRID";
+  MI.className=m==="local"?"ml":"mc";
+  LB.style.display=m==="cloud"?"none":"";
+}
+MD.addEventListener("change",uM);uM();
+
+// LOAD
+LB.addEventListener("click",async()=>{
+  if(E){ST.textContent="Already loaded";return;}
+  LB.disabled=true;ST.textContent=`Loading ${MS.value}…`;PW.style.display="block";PB.style.width="0%";
+  try{
+    E=await W.CreateMLCEngine(MS.value,{initProgressCallback:p=>{
+      ST.textContent=p.text||"Loading…";if(p.progress)PB.style.width=(p.progress*100)+"%";
+    }});
+    ST.textContent=`✓ ${MS.value} loaded`;PW.style.display="none";
+  }catch(e){ST.textContent="Error: "+e.message;PW.style.display="none";}
+  LB.disabled=false;
+});
+
+// CLOUD
+async function cc(msgs){
+  const am=msgs.filter(m=>m.role!=="system").map(m=>({role:m.role,content:m.content}));
+  const r=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:SYS,messages:am,mcp_servers:MCPS})
+  });
+  const d=await r.json();let t="",tl=[];
+  for(const b of(d.content||[])){
+    if(b.type==="text")t+=b.text;
+    if(b.type==="mcp_tool_use")tl.push(b.name);
+    if(b.type==="mcp_tool_result")try{JSON.parse(b.content[0].text);t+="\n[Tool data received]";}catch(e){}
+  }
+  return{text:t||d.error?.message||"No response",tools:tl};
+}
+
+// LOCAL STREAM
+async function lc(msgs,el){
+  let f="";
+  const s=await E.chat.completions.create({messages:msgs,stream:true,max_tokens:512,temperature:.7});
+  for await(const c of s){f+=(c.choices[0]?.delta?.content||"");el.textContent=f;C.scrollTop=C.scrollHeight;}
+  return f;
+}
+
+// ADD MSG
+function am(role,txt,tools){
+  const d=document.createElement("div");d.className="m "+(role==="user"?"u":"a");
+  if(role==="assistant"){
+    let h='<div class="lb">⚒ The Charter</div>';
+    if(tools)h+=tools.map(t=>`<span class="tt cl">🔧 ${t}</span>`).join("");
+    h+='<div class="ct"></div>';d.innerHTML=h;
+  }else d.textContent=txt;
+  C.appendChild(d);C.scrollTop=C.scrollHeight;return d;
+}
+
+// SEND
+async function go(){
+  const t=I.value.trim();if(!t||busy)return;
+  I.value="";am("user",t);H.push({role:"user",content:t});
+  busy=true;SB.disabled=true;ST.textContent="Generating…";
+  const mode=MD.value;
+
+  if(mode==="local"||mode==="hybrid"){
+    if(!E){ST.textContent="Loading model…";LB.click();
+      await new Promise(r=>{const iv=setInterval(()=>{if(E){clearInterval(iv);r();}},400);});}
+    const d=am("assistant","");d.querySelector(".lb").innerHTML='⚒ The Charter <span class="tt lo">LOCAL</span>';
+    const ct=d.querySelector(".ct");
+    const r=await lc(H,ct);H.push({role:"assistant",content:r});
+  }
+  if(mode==="cloud"||mode==="hybrid"){
+    const d=am("assistant","");d.querySelector(".lb").innerHTML='⚒ The Charter <span class="tt cl">CLAUDE+MCP</span>';
+    const ct=d.querySelector(".ct");ct.textContent="Thinking…";
+    try{const r=await cc(H);ct.textContent=r.text;
+      if(r.tools.length)d.querySelector(".lb").innerHTML+=" "+r.tools.map(t=>`<span class="tt cl">🔧 ${t}</span>`).join("");
+      H.push({role:"assistant",content:r.text});
+    }catch(e){ct.textContent="Cloud error: "+e.message;}
+  }
+  ST.textContent="✓ Ready";busy=false;SB.disabled=false;I.focus();
+}
+
+SB.addEventListener("click",go);
+I.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();go();}});
+MS.addEventListener("change",()=>{E=null;ST.textContent="Model changed — press ⚡ Load";});
+</script>
+</body>
+</html>
